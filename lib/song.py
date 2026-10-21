@@ -1,23 +1,23 @@
 
 class Song:
-    # Class attributes shared by all songs
+    # Class attributes
     count = 0
     genres = []
     artists = []
     genre_count = {}
-    artists_count = {}
+    artist_count = {}
+    artists_count = artist_count
 
     def __init__(self, name, artist, genre):
         self.name = name
         self.artist = artist
         self.genre = genre
 
-        # Update statistics for each new song
-        self.add_song_to_count()
-        self.add_to_genres(genre)
-        self.add_to_artists(artist)
-        self.add_to_genre_count(genre)
-        self.add_to_artists_count(artist)
+        Song.add_song_to_count()
+        Song.add_to_genres(genre)
+        Song.add_to_artists(artist)
+        Song.add_to_genre_count(genre)
+        Song.add_to_artists_count(artist)
 
     @classmethod
     def add_song_to_count(cls):
@@ -41,10 +41,14 @@ class Song:
 
     @classmethod
     def add_to_artists_count(cls, artist):
-        if artist not in cls.artists_count:
-            cls.artists_count[artist] = 0
-        cls.artists_count[artist] += 1
+        if artist not in cls.artist_count:
+            cls.artist_count[artist] = 0
+        cls.artist_count[artist] += 1
 
+        if cls.artists_count is not cls.artist_count:
+            if artist not in cls.artists_count:
+                cls.artists_count[artist] = 0
+            cls.artists_count[artist] += 1
 
     def __str__(self):
         return f"{self.name} by {self.artist} ({self.genre})"
